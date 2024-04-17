@@ -50,25 +50,13 @@ export default function LogIn({ navigation }) {
               <CustomizedButton
                 color="white"
                 title={"Login"}
-                onPress={() => setChangeText(!changeText)}
+                onPress={() => navigation.navigate("Farmer")}
               />
             </Pressable>
             <TouchableOpacity onPress={() => navigation.navigate("Signup")}>
               <Text>create account</Text>
             </TouchableOpacity>
           </InputsContainer>
-          {/* <ScrollView>
-          <Title>{changeText ? "Hello" : "text changed"}</Title>
-          <TouchableOpacity>
-            <CustomizedButton
-              color="red"
-              title={"click to change text"}
-              onPress={() => setChangeText(!changeText)}
-            />
-          </TouchableOpacity>
-          <Input onChangeText={(value) => setInput(value)} />
-          <Title>{input}</Title>
-        </ScrollView> */}
         </Container>
       </ScrollView>
     </SafeAreaView>

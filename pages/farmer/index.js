@@ -20,7 +20,7 @@ export default function Farmer({ navigation }) {
         >
           <Header>welcome to vetigo</Header>
           <SelectionContainer>
-            <View
+            <TouchableOpacity
               style={{
                 borderRadius: 20,
                 width: "80%",
@@ -31,6 +31,7 @@ export default function Farmer({ navigation }) {
                 justifyContent: "center",
                 position: "relative",
               }}
+              onPress={() => navigation.navigate("ChooseVet")}
             >
               <Text
                 style={{
@@ -53,7 +54,7 @@ export default function Farmer({ navigation }) {
                   position: "absolute",
                 }}
               />
-            </View>
+            </TouchableOpacity>
             <View
               style={{
                 borderRadius: 20,

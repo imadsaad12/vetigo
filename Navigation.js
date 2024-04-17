@@ -3,6 +3,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import LogIn from "./pages/login";
 import Signup from "./pages/signup";
 import Farmer from "./pages/farmer";
+import ChooseVet from "./pages/farmer/chooseVet";
 
 export default function Navigation() {
   const Stack = createStackNavigator();
@@ -16,6 +17,7 @@ export default function Navigation() {
         <Stack.Screen name="LogIn" component={LogIn} />
         <Stack.Screen name="Signup" component={Signup} />
         <Stack.Screen name="Farmer" component={Farmer} />
+        <Stack.Screen name="ChooseVet" component={ChooseVet} />
       </Stack.Navigator>
     </NavigationContainer>
   );

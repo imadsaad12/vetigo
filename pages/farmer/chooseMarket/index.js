@@ -1,17 +1,29 @@
-import { FlatList, Text, View } from "react-native";
+import { FlatList, Image, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import RNPickerSelect from "react-native-picker-select";
 import { Container, Header, Row } from "./styles";
-import { AntDesign, Ionicons, SimpleLineIcons } from "@expo/vector-icons";
+import {
+  AntDesign,
+  Entypo,
+  Ionicons,
+  SimpleLineIcons,
+} from "@expo/vector-icons";
 import { TouchableOpacity, ScrollView } from "react-native-gesture-handler";
 
-export default function ChooseVet({ navigation }) {
+export default function ChooseMarket({ navigation }) {
   return (
     <SafeAreaView>
       <Container>
         <Header>
-          <Text style={{ fontSize: 20, color: "white", fontWeight: "bold" }}>
-            Vet Selection
+          <Text
+            style={{
+              fontSize: 20,
+              color: "white",
+              fontWeight: "bold",
+              letterSpacing: 3,
+            }}
+          >
+            Market
           </Text>
         </Header>
         <RNPickerSelect
@@ -27,29 +39,27 @@ export default function ChooseVet({ navigation }) {
               fontSize: 16,
               paddingVertical: 12,
               paddingHorizontal: 10,
-              borderWidth: 2,
-              borderColor: "gray",
-              borderRadius: 4,
-              color: "black",
-              paddingRight: 30,
-              width: "80%",
+              border: "none",
+              borderRadius: 20,
+              paddingLeft: 30,
+              width: "90%",
               alignSelf: "center",
-              marginBottom: 20,
+              backgroundColor: "#5b9a71",
+              color: "white",
             },
             inputAndroid: {
               fontSize: 16,
               paddingVertical: 12,
               paddingHorizontal: 10,
-              borderWidth: 2,
-              borderColor: "gray",
-              borderRadius: 4,
-              color: "black",
-              paddingRight: 30,
-              width: "80%",
+              border: "none",
+              borderRadius: 20,
+              paddingLeft: 30,
+              width: "90%",
               alignSelf: "center",
-              marginBottom: 20,
+              backgroundColor: "#5b9a71",
+              color: "black",
             },
-            placeholder: { color: "gray" },
+            placeholder: { color: "black" },
           }}
         />
         <View style={{ height: "65%" }}>
@@ -57,62 +67,67 @@ export default function ChooseVet({ navigation }) {
             data={[1, 1, 1, 1, , 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]}
             renderItem={() => (
               <Row style={{ borderRadius: 4 }}>
+                <Image
+                  source={require("../tor.jpg")}
+                  style={{
+                    width: "30%",
+                    height: "100%",
+                    borderRadius: 10,
+                  }}
+                />
                 <View
                   style={{
-                    width: "40%",
                     display: "flex",
-                    flexDirection: "row",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    marginLeft: 15,
+                    gap: 5,
+                    height: "100%",
                   }}
                 >
+                  <Text
+                    style={{
+                      fontSize: 15,
+                      color: "black",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    Beirut SuperMarket
+                  </Text>
                   <View
                     style={{
-                      borderRadius: 100,
-                      width: 50,
-                      height: 50,
-                      backgroundColor: "white",
                       display: "flex",
-                      justifyContent: "center",
+                      flexDirection: "row",
                       alignItems: "center",
+                      justifyContent: "flex-start",
                     }}
                   >
-                    <Text
-                      style={{
-                        fontWeight: "bold",
-                        fontSize: 20,
-                        color: "gray",
-                      }}
-                    >
-                      IS
-                    </Text>
-                  </View>
-                  <View
-                    style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      justifyContent: "center",
-                      marginLeft: 15,
-                      gap: 5,
-                    }}
-                  >
-                    <Text
-                      style={{
-                        fontSize: 15,
-                        color: "white",
-                      }}
-                    >
-                      IMAD SAAD
-                    </Text>
+                    <Entypo
+                      name="location-pin"
+                      size={20}
+                      color="gray"
+                      style={{ marginLeft: -5 }}
+                    />
                     <Text
                       style={{
                         fontSize: 11,
-                        color: "white",
+                        color: "gray",
                       }}
                     >
-                      19/20/2000
+                      Tahwita Al Ghadir
                     </Text>
                   </View>
+                  <Text
+                    style={{
+                      fontSize: 11,
+                      color: "gray",
+                      width: "55%",
+                    }}
+                  >
+                    Lorem Ipsum is simply dummy the printing and typesetting to
+                    industry. Lorem Ipsum has
+                  </Text>
                 </View>
-                <AntDesign name="pluscircle" size={30} color="white" />
               </Row>
             )}
           />

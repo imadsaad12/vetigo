@@ -10,6 +10,7 @@ import {
   Text,
 } from "./styles";
 import {
+  Button,
   KeyboardAvoidingView,
   Pressable,
   ScrollView,
@@ -39,19 +40,23 @@ export default function LogIn({ navigation }) {
               placeholder="Password"
             />
             <Pressable
+              // onPress={() => navigation.navigate("Farmer")}
+              // onPress={() => navigation.navigate("VetAdministrator")}
+              // onPress={() => navigation.navigate("ChooseMarket")}
+              onPress={() => navigation.navigate("AddVet")}
+              // onPress={() => navigation.navigate("Informative")}
               style={{
-                backgroundColor: "green",
+                backgroundColor: "#5b9a72",
                 width: "80%",
+                height: 40,
                 border: "2px solid gray",
-                borderRadius: "10px",
-                color: "white",
+                borderRadius: 14,
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
               }}
             >
-              <CustomizedButton
-                color="white"
-                title={"Login"}
-                onPress={() => navigation.navigate("Farmer")}
-              />
+              <Text style={{ fontSize: 20, color: "white" }}>Login</Text>
             </Pressable>
             <TouchableOpacity onPress={() => navigation.navigate("Signup")}>
               <Text>create account</Text>

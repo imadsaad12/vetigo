@@ -8,7 +8,6 @@ export const Container = styled.View`
 export const Header = styled.Text`
   font-size: 40;
   font-weight: bold;
-  font-family: Arial;
   text-align: center;
   margin-top: 140;
   color: white;

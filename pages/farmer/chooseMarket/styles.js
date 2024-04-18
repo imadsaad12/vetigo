@@ -15,19 +15,17 @@ export const Header = styled.View`
   justify-content: center;
   align-items: center;
   background-color: #5b9a72;
-  margin-bottom: 50;
 `;
 
 export const Row = styled.View`
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: flex-start;
   padding-left: 10;
   padding-right: 10;
   align-items: center;
-  height: 60;
-  width: 80%;
+  height: 100;
+  width: 90%;
   align-self: center;
-  background-color: #5b9a72;
   margin-bottom: 20;
 `;

@@ -100,7 +100,7 @@ export default function Signup({ navigation }) {
             backgroundColor: "green",
             width: "80%",
             border: "2px solid gray",
-            borderRadius: "10px",
+            borderRadius: 10,
             color: "white",
             alignSelf: "center",
             marginTop: 10,

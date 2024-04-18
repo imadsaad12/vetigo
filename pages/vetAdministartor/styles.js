@@ -15,7 +15,6 @@ export const Header = styled.View`
   justify-content: center;
   align-items: center;
   background-color: #5b9a72;
-  margin-bottom: 50;
 `;
 
 export const Row = styled.View`

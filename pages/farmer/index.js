@@ -112,9 +112,7 @@ export default function Farmer({ navigation }) {
                 onPress={() => navigation.navigate("Account")}
               >
                 <AntDesign name="home" size={24} color="black" />
-                <Text style={{ color: "#c6dbca", fontFamily: "Cochin" }}>
-                  Home
-                </Text>
+                <Text style={{ color: "#c6dbca" }}>Home</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 style={{
@@ -130,9 +128,7 @@ export default function Farmer({ navigation }) {
                   size={24}
                   color="black"
                 />
-                <Text style={{ color: "#c6dbca", fontFamily: "Cochin" }}>
-                  Informative
-                </Text>
+                <Text style={{ color: "#c6dbca" }}>Informative</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 style={{
@@ -143,9 +139,7 @@ export default function Farmer({ navigation }) {
                 onPress={() => navigation.navigate("Account")}
               >
                 <SimpleLineIcons name="logout" size={20} color="black" />
-                <Text style={{ color: "#c6dbca", fontFamily: "Cochin" }}>
-                  Logout
-                </Text>
+                <Text style={{ color: "#c6dbca" }}>Logout</Text>
               </TouchableOpacity>
             </View>
           </SelectionContainer>

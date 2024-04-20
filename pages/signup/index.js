@@ -5,12 +5,16 @@ import {
   TouchableOpacity,
   Text as Title,
   KeyboardAvoidingView,
+  Button,
 } from "react-native";
+import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Container, Text } from "./styles";
 import { CustomizedButton, Input } from "../login/styles";
 import RNPickerSelect from "react-native-picker-select";
 import { ScrollView } from "react-native-gesture-handler";
+import Picker from "react-native-picker-select";
+import { SelectList } from "react-native-dropdown-select-list";
 
 export default function Signup({ navigation }) {
   const fields = [
@@ -19,13 +23,20 @@ export default function Signup({ navigation }) {
     { name: "phoneNumber", placeholder: "Phone number" },
     { name: "numberOfChicken", placeholder: "Number of chicken" },
   ];
+  const [selected, setSelected] = useState("");
 
+  const data = [
+    { key: "2", value: "Appliances" },
+    { key: "3", value: "Cameras" },
+    { key: "5", value: "Vegetables" },
+    { key: "6", value: "Diary Products" },
+    { key: "7", value: "Drinks" },
+  ];
   return (
     <SafeAreaView>
       <ScrollView
         style={{
           width: "100%",
-          height: "100%",
           marginTop: 50,
         }}
         automaticallyAdjustKeyboardInsets={true}
@@ -53,69 +64,32 @@ export default function Signup({ navigation }) {
               Create your account
             </Title>
           </View>
+          <View style={{ width: "80%" }}>
+            <SelectList
+              setSelected={(val) => setSelected(val)}
+              data={data}
+              save="value"
+              maxHeight={100}
+            />
+          </View>
           {fields.map(() => (
             <Input
               // onChangeText={(value) => setInput(value)}
               placeholder="Username"
             />
           ))}
-          <RNPickerSelect
-            onValueChange={(value) => console.log(value)}
-            items={[
-              { label: "Football", value: "football" },
-              { label: "Baseball", value: "baseball" },
-              { label: "Hockey", value: "hockey" },
-            ]}
-            style={{
-              inputIOS: {
-                fontSize: 16,
-                paddingVertical: 12,
-                paddingHorizontal: 10,
-                borderWidth: 2,
-                borderColor: "gray",
-                borderRadius: 4,
-                color: "black",
-                paddingRight: 30,
-                width: "80%",
-                alignSelf: "center",
-              },
-              inputAndroid: {
-                fontSize: 16,
-                paddingVertical: 12,
-                paddingHorizontal: 10,
-                borderWidth: 2,
-                borderColor: "gray",
-                borderRadius: 4,
-                color: "black",
-                paddingRight: 30,
-                width: "80%",
-                alignSelf: "center",
-              },
-              // placeholderColor: Constants.colour.grey_90,
-            }}
-          />
+
+          <View style={{ width: "80%", borderRadius: 20 }}>
+            <Button
+              title="sign up"
+              onPress={() => navigation.navigate("AddVet")}
+              color="#5b9a72"
+            />
+          </View>
+          <TouchableOpacity onPress={() => navigation.navigate("LogIn")}>
+            <Text>already have account?</Text>
+          </TouchableOpacity>
         </Container>
-        <Pressable
-          style={{
-            backgroundColor: "green",
-            width: "80%",
-            border: "2px solid gray",
-            borderRadius: 10,
-            color: "white",
-            alignSelf: "center",
-            marginTop: 10,
-            marginBottom: 10,
-          }}
-        >
-          <CustomizedButton
-            color="white"
-            title={"Sign up"}
-            onPress={() => setChangeText(!changeText)}
-          />
-        </Pressable>
-        <TouchableOpacity onPress={() => navigation.navigate("LogIn")}>
-          <Text>already have account?</Text>
-        </TouchableOpacity>
       </ScrollView>
     </SafeAreaView>
   );

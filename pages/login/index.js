@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import {
   Container,
-  CustomizedButton,
   Input,
   Image,
   ImageContainer,
@@ -9,19 +8,35 @@ import {
   InputsContainer,
   Text,
 } from "./styles";
-import {
-  Button,
-  KeyboardAvoidingView,
-  Pressable,
-  ScrollView,
-  TouchableOpacity,
-} from "react-native";
+import { Button, ScrollView, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-export default function LogIn({ navigation }) {
-  const [changeText, setChangeText] = useState("Hello");
-  const [input, setInput] = useState("write in text input");
+export default function LogIn({
+  navigation,
+  route: {
+    params: { data },
+  },
+}) {
+  const [input, setInput] = useState({ username: "", password: "" });
+  const handleLogin = () => {
+    const { farmers, govs, vets } = data;
+    const isFarmer = farmers.find(
+      ({ username }) => username === input.username
+    );
+    if (isFarmer) {
+      navigation.navigate("Farmer");
+    }
+    const isGov = govs.find(({ username }) => username === input.username);
 
+    if (isGov) {
+      navigation.navigate("Farmer");
+    }
+    const isVet = vets.find(({ username }) => username === input.username);
+
+    if (isVet) {
+      navigation.navigate("Farmer");
+    }
+  };
   return (
     <SafeAreaView style={{ height: "100%" }}>
       <ScrollView automaticallyAdjustKeyboardInsets={true}>
@@ -32,32 +47,17 @@ export default function LogIn({ navigation }) {
           </ImageContainer>
           <InputsContainer>
             <Input
-              onChangeText={(value) => setInput(value)}
+              onChangeText={(value) => setInput({ ...input, username: value })}
               placeholder="Username"
             />
             <Input
-              onChangeText={(value) => setInput(value)}
+              onChangeText={(value) => setInput({ ...input, password: value })}
               placeholder="Password"
             />
-            <Pressable
-              // onPress={() => navigation.navigate("Farmer")}
-              // onPress={() => navigation.navigate("VetAdministrator")}
-              // onPress={() => navigation.navigate("ChooseMarket")}
-              onPress={() => navigation.navigate("AddVet")}
-              // onPress={() => navigation.navigate("Informative")}
-              style={{
-                backgroundColor: "#5b9a72",
-                width: "80%",
-                height: 40,
-                border: "2px solid gray",
-                borderRadius: 14,
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <Text style={{ fontSize: 20, color: "white" }}>Login</Text>
-            </Pressable>
+
+            <View style={{ width: "80%", borderRadius: 20 }}>
+              <Button title="Log in" onPress={handleLogin} color="#5b9a72" />
+            </View>
             <TouchableOpacity onPress={() => navigation.navigate("Signup")}>
               <Text>create account</Text>
             </TouchableOpacity>

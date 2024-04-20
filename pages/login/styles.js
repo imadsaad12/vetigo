@@ -2,7 +2,7 @@ import styled from "styled-components/native";
 
 export const Container = styled.View`
   width: 100%;
-  height: 100vh;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -54,15 +54,16 @@ export const Image = styled.Image`
 
 export const ImageContainer = styled.View`
   width: 95%;
-  height: 450px;
+  height: 400px;
   position: relative;
 `;
 
 export const InputsContainer = styled.View`
   width: 100%;
-  height: 40%;
+  height: 30%;
   display: flex;
   justify-content: flex-end;
   align-items: center;
   gap: 40px;
+  margin-top: 20;
 `;

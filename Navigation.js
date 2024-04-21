@@ -8,7 +8,8 @@ import VetAdministrator from "./pages/vetAdministartor";
 import ChooseMarket from "./pages/farmer/chooseMarket";
 import Informative from "./pages/informative";
 import AddVet from "./pages/addVet";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Navigation() {
   const Stack = createStackNavigator();
@@ -59,48 +60,59 @@ export default function Navigation() {
     ],
   });
 
+  useEffect(() => {
+    AsyncStorage.setItem("data", JSON.stringify(data));
+  }, []);
+
+  const getData = async () => {
+    const res = await AsyncStorage.getItem("data");
+    return JSON.parse(res);
+  };
+  const updateData = async (payload) =>
+    AsyncStorage.setItem("data", JSON.stringify(payload));
+
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="LogIn" screenOptions={screenoption}>
         <Stack.Screen
           name="LogIn"
           component={LogIn}
-          initialParams={{ setData, data: data }}
+          // initialParams={{ setData: updateData, data: data }}
         />
         <Stack.Screen
           name="Signup"
           component={Signup}
-          initialParams={{ setData, data }}
+          // initialParams={{ setData: updateData, data: data }}
         />
         <Stack.Screen
           name="Farmer"
           component={Farmer}
-          initialParams={{ setData, data }}
+          // initialParams={{ setData: updateData, data: data }}
         />
         <Stack.Screen
           name="ChooseVet"
           component={ChooseVet}
-          initialParams={{ setData, data }}
+          // initialParams={{ setData: updateData, data: data }}
         />
         <Stack.Screen
           name="VetAdministrator"
           component={VetAdministrator}
-          initialParams={{ setData, data }}
+          // initialParams={{ setData: updateData, data: data }}
         />
         <Stack.Screen
           name="ChooseMarket"
           component={ChooseMarket}
-          initialParams={{ setData, data }}
+          // initialParams={{ setData: updateData, data: data }}
         />
         <Stack.Screen
           name="Informative"
           component={Informative}
-          initialParams={{ setData, data }}
+          // initialParams={{ setData: updateData, data: data }}
         />
         <Stack.Screen
           name="AddVet"
           component={AddVet}
-          initialParams={{ setData, data }}
+          // initialParams={{ setData: updateData, data: data }}
         />
       </Stack.Navigator>
     </NavigationContainer>

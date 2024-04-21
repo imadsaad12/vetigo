@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Container,
   Input,
@@ -10,16 +10,25 @@ import {
 } from "./styles";
 import { Button, ScrollView, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export default function LogIn({
-  navigation,
-  route: {
-    params: { data },
-  },
-}) {
+export default function LogIn({ navigation }) {
   const [input, setInput] = useState({ username: "", password: "" });
+
+  const [data, setData] = useState([]);
+
+  const getData = async () => {
+    const res = await AsyncStorage.getItem("data");
+    return JSON.parse(res);
+  };
+
+  useEffect(() => {
+    getData().then((res) => setData(res));
+  }, []);
+
   const handleLogin = () => {
     const { farmers, govs, vets } = data;
+    console.log(data);
     const isFarmer = farmers.find(
       ({ username }) => username === input.username
     );
@@ -37,6 +46,7 @@ export default function LogIn({
       navigation.navigate("Farmer");
     }
   };
+
   return (
     <SafeAreaView style={{ height: "100%" }}>
       <ScrollView automaticallyAdjustKeyboardInsets={true}>

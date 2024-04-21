@@ -7,7 +7,7 @@ import {
   KeyboardAvoidingView,
   Button,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Container, Text } from "./styles";
 import { CustomizedButton, Input } from "../login/styles";
@@ -15,23 +15,39 @@ import RNPickerSelect from "react-native-picker-select";
 import { ScrollView } from "react-native-gesture-handler";
 import Picker from "react-native-picker-select";
 import { SelectList } from "react-native-dropdown-select-list";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Signup({ navigation }) {
   const fields = [
-    { name: "firstName", placeholder: "First name" },
-    { name: "lastName", placeholder: "Last name" },
-    { name: "phoneNumber", placeholder: "Phone number" },
-    { name: "numberOfChicken", placeholder: "Number of chicken" },
+    { name: "username", placeholder: "Username" },
+    { name: "password", placeholder: "Password" },
   ];
+
+  const [data, setData] = useState([]);
+
+  const getData = async () => {
+    const res = await AsyncStorage.getItem("data");
+    return JSON.parse(res);
+  };
+
+  useEffect(() => {
+    getData().then((res) => setData(res));
+  }, []);
+
+  const updateData = async (payload) =>
+    AsyncStorage.setItem("data", JSON.stringify(payload));
+
+  const [input, setInput] = useState({ username: "", password: "" });
   const [selected, setSelected] = useState("");
 
-  const data = [
-    { key: "2", value: "Appliances" },
-    { key: "3", value: "Cameras" },
-    { key: "5", value: "Vegetables" },
-    { key: "6", value: "Diary Products" },
-    { key: "7", value: "Drinks" },
+  const locationData = [
+    { key: "1", value: "A1" },
+    { key: "2", value: "B2" },
+    { key: "3", value: "C3" },
+    { key: "4", value: "D5" },
+    { key: "5", value: "E6" },
   ];
+
   return (
     <SafeAreaView>
       <ScrollView
@@ -67,22 +83,40 @@ export default function Signup({ navigation }) {
           <View style={{ width: "80%" }}>
             <SelectList
               setSelected={(val) => setSelected(val)}
-              data={data}
+              data={locationData}
               save="value"
               maxHeight={100}
+              placeholder="Choose Location"
             />
           </View>
-          {fields.map(() => (
+          {fields.map(({ name, placeholder }) => (
             <Input
-              // onChangeText={(value) => setInput(value)}
-              placeholder="Username"
+              onChangeText={(value) => setInput({ ...input, [name]: value })}
+              placeholder={placeholder}
             />
           ))}
 
           <View style={{ width: "80%", borderRadius: 20 }}>
             <Button
               title="sign up"
-              onPress={() => navigation.navigate("AddVet")}
+              onPress={() => {
+                if (input?.username && input?.password && selected) {
+                  updateData({
+                    ...data,
+                    farmers: [
+                      ...data.farmers,
+                      {
+                        ...input,
+                        location: selected,
+                        id: "f" + Number(data.farmers.length + 1),
+                      },
+                    ],
+                  });
+
+                  setInput({});
+                  navigation.navigate("LogIn");
+                }
+              }}
               color="#5b9a72"
             />
           </View>

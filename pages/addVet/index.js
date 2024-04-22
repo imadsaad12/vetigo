@@ -18,13 +18,51 @@ import {
   SimpleLineIcons,
 } from "@expo/vector-icons";
 import Menu from "../menu";
+import { useState, useEffect } from "react";
+import { SelectList } from "react-native-dropdown-select-list";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function AddVet({ navigation }) {
-  const fields = [
-    { name: "firstName", placeholder: "First name" },
-    { name: "lastName", placeholder: "Last name" },
-    { name: "location", placeholder: "Location" },
+  const [data, setData] = useState([]);
+  const [input, setInput] = useState({ username: "", password: "" });
+
+  const getData = async () => {
+    const res = await AsyncStorage.getItem("data");
+    return JSON.parse(res);
+  };
+
+  useEffect(() => {
+    getData().then((res) => setData(res));
+  }, []);
+
+  const [selected, setSelected] = useState("");
+
+  const locationData = [
+    { key: "1", value: "A1" },
+    { key: "2", value: "B2" },
+    { key: "3", value: "C3" },
+    { key: "4", value: "D5" },
+    { key: "5", value: "E6" },
   ];
+
+  const fields = [
+    { name: "username", placeholder: "Username" },
+    { name: "password", placeholder: "Password" },
+  ];
+  const updateData = async (payload) =>
+    AsyncStorage.setItem("data", JSON.stringify(payload));
+
+  function getCurrentDate() {
+    const date = new Date();
+
+    const day = String(date.getDate()).padStart(2, "0");
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const year = date.getFullYear();
+
+    const formattedDate = `${day}/${month}/${year}`;
+
+    return formattedDate;
+  }
 
   return (
     <SafeAreaView>
@@ -46,10 +84,6 @@ export default function AddVet({ navigation }) {
               marginLeft: 50,
             }}
           >
-            {/* <Image
-              source={require("../login/logo.png")}
-              style={{ width: 40, height: 40 }}
-            /> */}
             <MaterialIcons
               name="admin-panel-settings"
               size={44}
@@ -65,16 +99,43 @@ export default function AddVet({ navigation }) {
               Create Vet Account
             </Title>
           </View>
-          {fields.map(() => (
+          <View style={{ width: "80%" }}>
+            <SelectList
+              setSelected={(val) => setSelected(val)}
+              data={locationData}
+              save="value"
+              maxHeight={100}
+              placeholder="Choose Location"
+            />
+          </View>
+          {fields.map(({ name, placeholder }) => (
             <Input
-              // onChangeText={(value) => setInput(value)}
-              placeholder="Username"
+              onChangeText={(value) => setInput({ ...input, [name]: value })}
+              placeholder={placeholder}
             />
           ))}
           <View style={{ width: "80%", borderRadius: 20 }}>
             <Button
-              title="Log in"
-              onPress={() => console.log("test")}
+              title="Add Vet"
+              onPress={() => {
+                if (input?.username && input?.password && selected) {
+                  updateData({
+                    ...data,
+                    vets: [
+                      ...data.vets,
+                      {
+                        ...input,
+                        location: selected,
+                        id: "v" + Number(data.vets.length + 1),
+                        date: getCurrentDate(),
+                      },
+                    ],
+                  });
+
+                  setInput({});
+                  navigation.navigate("LogIn");
+                }
+              }}
               color="#5b9a72"
             />
           </View>

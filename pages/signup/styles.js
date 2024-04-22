@@ -7,7 +7,7 @@ export const Container = styled.View`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 40px;
+  gap: 15;
 `;
 export const Text = styled.Text`
   align-self: center;

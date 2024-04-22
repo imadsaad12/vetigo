@@ -9,9 +9,10 @@ export const Header = styled.Text`
   font-size: 40;
   font-weight: bold;
   text-align: center;
-  margin-top: 140;
+  margin-top: 100;
   color: white;
   text-transform: uppercase;
+  letter-spacing: 5;
   line-height: 50;
 `;
 

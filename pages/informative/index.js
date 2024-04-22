@@ -61,7 +61,7 @@ export default function Informative({ navigation }) {
               flexDirection: "column",
               alignItems: "center",
             }}
-            onPress={() => navigation.navigate("Account")}
+            // onPress={() => navigation.navigate("Account")}
           >
             <AntDesign name="home" size={24} color="black" />
             <Text style={{ color: "#c6dbca" }}>Home</Text>
@@ -73,7 +73,7 @@ export default function Informative({ navigation }) {
               alignItems: "center",
               justifyContent: "space-between",
             }}
-            onPress={() => navigation.navigate("Account")}
+            // onPress={() => navigation.navigate("Account")}
           >
             <Ionicons
               name="information-circle-outline"
@@ -88,7 +88,7 @@ export default function Informative({ navigation }) {
               flexDirection: "column",
               alignItems: "center",
             }}
-            onPress={() => navigation.navigate("Account")}
+            onPress={() => navigation.navigate("LogIn")}
           >
             <SimpleLineIcons name="logout" size={20} color="black" />
             <Text style={{ color: "#c6dbca" }}>Logout</Text>

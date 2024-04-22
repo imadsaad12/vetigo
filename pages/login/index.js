@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useLayoutEffect } from "react";
 import {
   Container,
   Input,
@@ -11,10 +11,11 @@ import {
 import { Button, ScrollView, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useIsFocused } from "@react-navigation/native";
 
 export default function LogIn({ navigation }) {
   const [input, setInput] = useState({ username: "", password: "" });
-
+  const isFocused = useIsFocused();
   const [data, setData] = useState([]);
 
   const getData = async () => {
@@ -24,26 +25,33 @@ export default function LogIn({ navigation }) {
 
   useEffect(() => {
     getData().then((res) => setData(res));
-  }, []);
+  }, [isFocused]);
 
-  const handleLogin = () => {
+  const updateData = async (payload) =>
+    AsyncStorage.setItem("data", JSON.stringify(payload));
+
+  const handleLogin = async () => {
     const { farmers, govs, vets } = data;
-    console.log(data);
+
     const isFarmer = farmers.find(
       ({ username }) => username === input.username
     );
+
     if (isFarmer) {
+      await updateData({ ...data, activeId: isFarmer.id });
       navigation.navigate("Farmer");
     }
     const isGov = govs.find(({ username }) => username === input.username);
 
     if (isGov) {
-      navigation.navigate("Farmer");
+      await updateData({ ...data, activeId: isGov.id });
+      navigation.navigate("GovAdministrator");
     }
     const isVet = vets.find(({ username }) => username === input.username);
 
     if (isVet) {
-      navigation.navigate("Farmer");
+      await updateData({ ...data, activeId: isVet.id });
+      navigation.navigate("VetAdministrator");
     }
   };
 
@@ -63,6 +71,7 @@ export default function LogIn({ navigation }) {
             <Input
               onChangeText={(value) => setInput({ ...input, password: value })}
               placeholder="Password"
+              secureTextEntry={true}
             />
 
             <View style={{ width: "80%", borderRadius: 20 }}>

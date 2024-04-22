@@ -21,6 +21,9 @@ export default function Signup({ navigation }) {
   const fields = [
     { name: "username", placeholder: "Username" },
     { name: "password", placeholder: "Password" },
+    { name: "numberOfHerd", placeholder: "Number of herd" },
+    { name: "landArea", placeholder: "Land area" },
+    { name: "typeOfHerd", placeholder: "Type of herd" },
   ];
 
   const [data, setData] = useState([]);
@@ -40,14 +43,23 @@ export default function Signup({ navigation }) {
   const [input, setInput] = useState({ username: "", password: "" });
   const [selected, setSelected] = useState("");
 
-  const locationData = [
-    { key: "1", value: "A1" },
-    { key: "2", value: "B2" },
-    { key: "3", value: "C3" },
-    { key: "4", value: "D5" },
-    { key: "5", value: "E6" },
+  const selectData = [
+    { key: "Bint Jbeil", value: "Bint Jbeil" },
+    { key: "Baalback", value: "Baalback" },
+    { key: "Nabatieh", value: "Nabatieh" },
   ];
 
+  function getCurrentDate() {
+    const date = new Date();
+
+    const day = String(date.getDate()).padStart(2, "0");
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const year = date.getFullYear();
+
+    const formattedDate = `${day}/${month}/${year}`;
+
+    return formattedDate;
+  }
   return (
     <SafeAreaView>
       <ScrollView
@@ -83,7 +95,7 @@ export default function Signup({ navigation }) {
           <View style={{ width: "80%" }}>
             <SelectList
               setSelected={(val) => setSelected(val)}
-              data={locationData}
+              data={selectData}
               save="value"
               maxHeight={100}
               placeholder="Choose Location"
@@ -99,9 +111,9 @@ export default function Signup({ navigation }) {
           <View style={{ width: "80%", borderRadius: 20 }}>
             <Button
               title="sign up"
-              onPress={() => {
+              onPress={async () => {
                 if (input?.username && input?.password && selected) {
-                  updateData({
+                  await updateData({
                     ...data,
                     farmers: [
                       ...data.farmers,
@@ -109,6 +121,10 @@ export default function Signup({ navigation }) {
                         ...input,
                         location: selected,
                         id: "f" + Number(data.farmers.length + 1),
+                        approvedByVetId: null,
+                        pendingVetApproval: false,
+                        pendingGovApproval: false,
+                        date: getCurrentDate(),
                       },
                     ],
                   });

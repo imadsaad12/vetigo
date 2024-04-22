@@ -8,10 +8,9 @@ import { useIsFocused } from "@react-navigation/native";
 import { useState, useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export default function VetAdministrator({ navigation }) {
+export default function GovAdministrator({ navigation }) {
   const isFocused = useIsFocused();
   const [data, setData] = useState([]);
-  const [waitingFarmers, setWaitingFarmers] = useState([]);
   const [approvedFarmers, setApprovedFarmers] = useState([]);
 
   const getData = async () => {
@@ -22,15 +21,10 @@ export default function VetAdministrator({ navigation }) {
   useEffect(() => {
     getData().then((res) => {
       setData(res);
-      const farmers = res.farmers?.filter(
-        ({ approvedByVetId = null }) => approvedByVetId === res.activeId
-      );
       const approvedFarmersList = res.farmers?.filter(
-        ({ pendingVetApproval = null }) => pendingVetApproval
+        ({ pendingGovApproval = null }) => pendingGovApproval
       );
       setApprovedFarmers(approvedFarmersList);
-
-      setWaitingFarmers(farmers);
     });
   }, [isFocused]);
 
@@ -42,7 +36,7 @@ export default function VetAdministrator({ navigation }) {
 
     setApprovedFarmers([...approvedFarmers, item]);
 
-    farmer = { ...farmer, pendingVetApproval: true };
+    farmer = { ...farmer, pendingGovApproval: true };
 
     const updatedFarmers = data.farmers.map(({ id, ...rest }) => {
       if (id === item.id) {
@@ -53,18 +47,25 @@ export default function VetAdministrator({ navigation }) {
 
     await updateData({ ...data, farmers: updatedFarmers });
   };
+
   return (
     <SafeAreaView>
       <Container>
         <Header>
           <Text style={{ fontSize: 20, color: "white", fontWeight: "bold" }}>
-            Vet Administrator
+            Government Administrator
           </Text>
         </Header>
-
+        <View style={{ width: "80%", borderRadius: 20, alignSelf: "center" }}>
+          <Button
+            title="Add vet"
+            onPress={() => navigation.navigate("AddVet")}
+            color="#5b9a72"
+          />
+        </View>
         <View style={{ height: "65%" }}>
           <FlatList
-            data={waitingFarmers || []}
+            data={data.farmers}
             renderItem={({ index, item }) => {
               const isApproved = approvedFarmers.some(
                 ({ id }) => id === item.id

@@ -1,4 +1,5 @@
 import { FlatList, Image, Text, View } from "react-native";
+import { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import RNPickerSelect from "react-native-picker-select";
 import { Container, Header, Row } from "./styles";
@@ -9,8 +10,72 @@ import {
   SimpleLineIcons,
 } from "@expo/vector-icons";
 import { TouchableOpacity, ScrollView } from "react-native-gesture-handler";
+import { SelectList } from "react-native-dropdown-select-list";
 
 export default function ChooseMarket({ navigation }) {
+  const [selected, setSelected] = useState("");
+  const [data, setData] = useState([
+    {
+      title: "Beirut Souks",
+      imageUrl:
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQKgNnCnWnBrTJ4BU_hg5qFIyFG65zE5ydBXyjpK0VrQw&s",
+      location: "Beirut",
+      description:
+        "Beirut Souks is a major commercial district in downtown Beirut, Lebanon.",
+    },
+    {
+      title: "ABC Achrafieh",
+      imageUrl:
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQH-b7lbFMtycRVA5__AHWW83eB_BXHUhUiGTtLVWUWIA&s",
+      location: "Beirut",
+      description:
+        "ABC Achrafieh is a popular shopping mall located in the Achrafieh district of Beirut.",
+    },
+    {
+      title: "Le Mall",
+      imageUrl:
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShVnyVxzGojjB3ZdmAJqskIBV7fRtfLzJnyZ_EVycRDg&s",
+      location: "Sin El Fil",
+      description:
+        "Le Mall is a large shopping center located in Sin El Fil, Lebanon, offering a variety of retail stores, restaurants, and entertainment options.",
+    },
+    {
+      title: "City Centre Beirut",
+      imageUrl:
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRgmxKNjSNtJ2EKJHSP0jku7CqbiL-9TFAuMTBQVQpDEQ&s",
+      location: "Hazmieh",
+      description:
+        "City Centre Beirut is a modern shopping complex located in Hazmieh, Lebanon, featuring international brands, a cinema, and dining options.",
+    },
+    {
+      title: "ABC Dbayeh",
+      imageUrl:
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTaN8mRFPhIsV2HP2gX3qCRBDgniMr-dogWP7_gh69eTg&s",
+      location: "Dbayeh",
+      description:
+        "ABC Dbayeh is a popular shopping destination located in Dbayeh, Lebanon, offering a wide range of stores, restaurants, and entertainment facilities.",
+    },
+    {
+      title: "City Mall",
+      imageUrl:
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSNe5RNc3hbed8gcGwGGwsy-Ignjyh8695SjCqxdthcdQ&s",
+      location: "Dora",
+      description:
+        "City Mall is a shopping and entertainment complex located in the Dora district of Beirut, Lebanon.",
+    },
+  ]);
+  const [filteredData, setFilteredData] = useState(data);
+
+  const selectData = [
+    { key: "All", value: "All" },
+    { key: "Beirut", value: "Beirut" },
+    { key: "Achrafieh", value: "Achrafieh" },
+    { key: "Sin El Fil", value: "Sin El Fil" },
+    { key: "Hazmieh", value: "Hazmieh" },
+    { key: "Dbayeh", value: "Dbayeh" },
+    { key: "Dora", value: "Dora" },
+  ];
+
   return (
     <SafeAreaView>
       <Container>
@@ -26,49 +91,32 @@ export default function ChooseMarket({ navigation }) {
             Market
           </Text>
         </Header>
-        <RNPickerSelect
-          placeholder={{ label: "Choose Location" }}
-          onValueChange={(value) => console.log(value)}
-          items={[
-            { label: "Football", value: "football" },
-            { label: "Baseball", value: "baseball" },
-            { label: "Hockey", value: "hockey" },
-          ]}
-          style={{
-            inputIOS: {
-              fontSize: 16,
-              paddingVertical: 12,
-              paddingHorizontal: 10,
-              border: "none",
-              borderRadius: 20,
-              paddingLeft: 30,
-              width: "90%",
-              alignSelf: "center",
-              backgroundColor: "#5b9a71",
-              color: "white",
-            },
-            inputAndroid: {
-              fontSize: 16,
-              paddingVertical: 12,
-              paddingHorizontal: 10,
-              border: "none",
-              borderRadius: 20,
-              paddingLeft: 30,
-              width: "90%",
-              alignSelf: "center",
-              backgroundColor: "#5b9a71",
-              color: "black",
-            },
-            placeholder: { color: "black" },
-          }}
-        />
-        <View style={{ height: "65%" }}>
+        <View style={{ height: "80%" }}>
+          <View style={{ width: "80%", alignSelf: "center", marginBottom: 30 }}>
+            <SelectList
+              setSelected={(val) => setSelected(val)}
+              data={selectData}
+              // save="value"
+              maxHeight={100}
+              onSelect={() => {
+                if (selected === "All") {
+                  setFilteredData(data);
+                } else {
+                  setFilteredData(
+                    data.filter(({ location }) => location === selected)
+                  );
+                }
+              }}
+            />
+          </View>
           <FlatList
-            data={[1, 1, 1, 1, , 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]}
-            renderItem={() => (
+            data={filteredData}
+            renderItem={({
+              item: { location, imageUrl, description, title },
+            }) => (
               <Row style={{ borderRadius: 4 }}>
                 <Image
-                  source={require("../tor.jpg")}
+                  source={{ uri: imageUrl }}
                   style={{
                     width: "30%",
                     height: "100%",
@@ -92,7 +140,7 @@ export default function ChooseMarket({ navigation }) {
                       fontWeight: "bold",
                     }}
                   >
-                    Beirut SuperMarket
+                    {title}
                   </Text>
                   <View
                     style={{
@@ -114,18 +162,17 @@ export default function ChooseMarket({ navigation }) {
                         color: "gray",
                       }}
                     >
-                      Tahwita Al Ghadir
+                      {location}
                     </Text>
                   </View>
                   <Text
                     style={{
                       fontSize: 11,
                       color: "gray",
-                      width: "55%",
+                      width: "30%",
                     }}
                   >
-                    Lorem Ipsum is simply dummy the printing and typesetting to
-                    industry. Lorem Ipsum has
+                    {description}
                   </Text>
                 </View>
               </Row>
@@ -153,7 +200,6 @@ export default function ChooseMarket({ navigation }) {
               flexDirection: "column",
               alignItems: "center",
             }}
-            onPress={() => navigation.navigate("Account")}
           >
             <AntDesign name="home" size={24} color="black" />
             <Text style={{ color: "#c6dbca" }}>Home</Text>
@@ -165,7 +211,7 @@ export default function ChooseMarket({ navigation }) {
               alignItems: "center",
               justifyContent: "space-between",
             }}
-            onPress={() => navigation.navigate("Account")}
+            onPress={() => navigation.navigate("Informative")}
           >
             <Ionicons
               name="information-circle-outline"
@@ -180,7 +226,7 @@ export default function ChooseMarket({ navigation }) {
               flexDirection: "column",
               alignItems: "center",
             }}
-            onPress={() => navigation.navigate("Account")}
+            onPress={() => navigation.navigate("LogIn")}
           >
             <SimpleLineIcons name="logout" size={20} color="black" />
             <Text style={{ color: "#c6dbca" }}>Logout</Text>

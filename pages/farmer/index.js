@@ -8,8 +8,38 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Container, Header, Option, SelectionContainer } from "./styles";
 import { AntDesign, Ionicons, SimpleLineIcons } from "@expo/vector-icons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useState, useLayoutEffect } from "react";
+import { useIsFocused } from "@react-navigation/native";
 
 export default function Farmer({ navigation }) {
+  const [approvedByText, setApprovedByText] = useState("");
+  const isFocused = useIsFocused();
+
+  const getData = async () => {
+    const res = await AsyncStorage.getItem("data");
+    return JSON.parse(res);
+  };
+
+  useLayoutEffect(() => {
+    getData().then((res) => {
+      const farmer = res.farmers.find(({ id }) => id === res.activeId);
+      console.log(farmer.pendingVetApproval, farmer.pendingGovApproval);
+      if (farmer.pendingVetApproval && farmer.pendingGovApproval) {
+        const vet = res.vets.find(({ id }) => id === farmer.approvedByVetId);
+        const string = `Approved by Vet : ${vet.username} and Government`;
+        setApprovedByText(string);
+      } else if (farmer.pendingVetApproval) {
+        const vet = res.vets.find(({ id }) => id === farmer.approvedByVetId);
+        const string = `Approved by Vet : ${vet.username}`;
+        setApprovedByText(string);
+      } else if (farmer.pendingGovApproval) {
+        const string = `Approved by Government`;
+        setApprovedByText(string);
+      }
+    });
+  }, [isFocused]);
+
   return (
     <SafeAreaView>
       <Container>
@@ -18,7 +48,12 @@ export default function Farmer({ navigation }) {
           resizeMode="cover"
           style={{ width: "100%", height: "100%" }}
         >
-          <Header>welcome to vetigo</Header>
+          <View>
+            <Header>welcome</Header>
+            <Text style={{ fontSize: 15, color: "white", alignSelf: "center" }}>
+              {approvedByText}
+            </Text>
+          </View>
           <SelectionContainer>
             <TouchableOpacity
               style={{
@@ -55,7 +90,7 @@ export default function Farmer({ navigation }) {
                 }}
               />
             </TouchableOpacity>
-            <View
+            <TouchableOpacity
               style={{
                 borderRadius: 20,
                 width: "80%",
@@ -66,6 +101,7 @@ export default function Farmer({ navigation }) {
                 justifyContent: "center",
                 position: "relative",
               }}
+              onPress={() => navigation.navigate("ChooseMarket")}
             >
               <Text
                 style={{
@@ -88,7 +124,8 @@ export default function Farmer({ navigation }) {
                   position: "absolute",
                 }}
               />
-            </View>
+            </TouchableOpacity>
+
             <View
               style={{
                 borderTopLeftRadius: 50,
@@ -109,7 +146,6 @@ export default function Farmer({ navigation }) {
                   flexDirection: "column",
                   alignItems: "center",
                 }}
-                onPress={() => navigation.navigate("Account")}
               >
                 <AntDesign name="home" size={24} color="black" />
                 <Text style={{ color: "#c6dbca" }}>Home</Text>
@@ -121,7 +157,7 @@ export default function Farmer({ navigation }) {
                   alignItems: "center",
                   justifyContent: "space-between",
                 }}
-                onPress={() => navigation.navigate("Account")}
+                onPress={() => navigation.navigate("Informative")}
               >
                 <Ionicons
                   name="information-circle-outline"
@@ -136,7 +172,7 @@ export default function Farmer({ navigation }) {
                   flexDirection: "column",
                   alignItems: "center",
                 }}
-                onPress={() => navigation.navigate("Account")}
+                onPress={() => navigation.navigate("LogIn")}
               >
                 <SimpleLineIcons name="logout" size={20} color="black" />
                 <Text style={{ color: "#c6dbca" }}>Logout</Text>

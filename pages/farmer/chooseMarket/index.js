@@ -19,7 +19,7 @@ export default function ChooseMarket({ navigation }) {
       title: "Beirut Souks",
       imageUrl:
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQKgNnCnWnBrTJ4BU_hg5qFIyFG65zE5ydBXyjpK0VrQw&s",
-      location: "Beirut",
+      location: "Bint Jbeil",
       description:
         "Beirut Souks is a major commercial district in downtown Beirut, Lebanon.",
     },
@@ -27,7 +27,7 @@ export default function ChooseMarket({ navigation }) {
       title: "ABC Achrafieh",
       imageUrl:
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQH-b7lbFMtycRVA5__AHWW83eB_BXHUhUiGTtLVWUWIA&s",
-      location: "Beirut",
+      location: "Nabatieh",
       description:
         "ABC Achrafieh is a popular shopping mall located in the Achrafieh district of Beirut.",
     },
@@ -43,7 +43,7 @@ export default function ChooseMarket({ navigation }) {
       title: "City Centre Beirut",
       imageUrl:
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRgmxKNjSNtJ2EKJHSP0jku7CqbiL-9TFAuMTBQVQpDEQ&s",
-      location: "Hazmieh",
+      location: "Batroun",
       description:
         "City Centre Beirut is a modern shopping complex located in Hazmieh, Lebanon, featuring international brands, a cinema, and dining options.",
     },
@@ -51,7 +51,7 @@ export default function ChooseMarket({ navigation }) {
       title: "ABC Dbayeh",
       imageUrl:
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTaN8mRFPhIsV2HP2gX3qCRBDgniMr-dogWP7_gh69eTg&s",
-      location: "Dbayeh",
+      location: "Jounieh",
       description:
         "ABC Dbayeh is a popular shopping destination located in Dbayeh, Lebanon, offering a wide range of stores, restaurants, and entertainment facilities.",
     },
@@ -59,7 +59,7 @@ export default function ChooseMarket({ navigation }) {
       title: "City Mall",
       imageUrl:
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSNe5RNc3hbed8gcGwGGwsy-Ignjyh8695SjCqxdthcdQ&s",
-      location: "Dora",
+      location: "Tripoli",
       description:
         "City Mall is a shopping and entertainment complex located in the Dora district of Beirut, Lebanon.",
     },

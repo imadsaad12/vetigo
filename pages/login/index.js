@@ -84,7 +84,7 @@ export default function LogIn({ navigation }) {
             />
 
             <View style={{ width: "80%", borderRadius: 20 }}>
-              {/* <Button title="Log in" onPress={handleLogin} color="#5b9a72" /> */}
+              <Button title="Log in" onPress={handleLogin} color="#5b9a72" />
             </View>
             <TouchableOpacity onPress={() => navigation.navigate("Signup")}>
               <Text>create account</Text>

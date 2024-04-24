@@ -40,7 +40,7 @@ export default function Menu({ navigation }) {
           flexDirection: "column",
           alignItems: "center",
         }}
-        onPress={() => navigation.navigate("Account")}
+        // onPress={() => navigation.navigate("Account")}
       >
         <AntDesign name="home" size={24} color="black" />
         <Text style={{ color: "#c6dbca" }}>Home</Text>

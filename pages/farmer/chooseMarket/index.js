@@ -68,12 +68,18 @@ export default function ChooseMarket({ navigation }) {
 
   const selectData = [
     { key: "All", value: "All" },
+    { key: "Bint Jbeil", value: "Bint Jbeil" },
+    { key: "Baalback", value: "Baalback" },
+    { key: "Nabatieh", value: "Nabatieh" },
     { key: "Beirut", value: "Beirut" },
-    { key: "Achrafieh", value: "Achrafieh" },
-    { key: "Sin El Fil", value: "Sin El Fil" },
-    { key: "Hazmieh", value: "Hazmieh" },
-    { key: "Dbayeh", value: "Dbayeh" },
-    { key: "Dora", value: "Dora" },
+    { key: "Tripoli", value: "Tripoli" },
+    { key: "Tyre", value: "Tyre" },
+    { key: "Sidon", value: "Sidon" },
+    { key: "Jounieh", value: "Jounieh" },
+    { key: "Zahle", value: "Zahle" },
+    { key: "Byblos", value: "Byblos" },
+    { key: "Aley", value: "Aley" },
+    { key: "Batroun", value: "Batroun" },
   ];
 
   return (
@@ -109,7 +115,74 @@ export default function ChooseMarket({ navigation }) {
               }}
             />
           </View>
-          <FlatList
+          <ScrollView>
+            {filteredData.map(({ location, imageUrl, description, title }) => (
+              <Row style={{ borderRadius: 4 }}>
+                <Image
+                  source={{ uri: imageUrl }}
+                  style={{
+                    width: "30%",
+                    height: "100%",
+                    borderRadius: 10,
+                  }}
+                />
+                <View
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    marginLeft: 15,
+                    gap: 5,
+                    height: "100%",
+                  }}
+                >
+                  <Text
+                    style={{
+                      fontSize: 15,
+                      color: "black",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    {title}
+                  </Text>
+                  <View
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      alignItems: "center",
+                      justifyContent: "flex-start",
+                    }}
+                  >
+                    <Entypo
+                      name="location-pin"
+                      size={20}
+                      color="gray"
+                      style={{ marginLeft: -5 }}
+                    />
+                    <Text
+                      style={{
+                        fontSize: 11,
+                        color: "gray",
+                      }}
+                    >
+                      {location}
+                    </Text>
+                  </View>
+                  <Text
+                    style={{
+                      fontSize: 11,
+                      color: "gray",
+                      width: "30%",
+                    }}
+                  >
+                    {description}
+                  </Text>
+                </View>
+              </Row>
+            ))}
+          </ScrollView>
+
+          {/* <FlatList
             data={filteredData}
             renderItem={({
               item: { location, imageUrl, description, title },
@@ -177,7 +250,7 @@ export default function ChooseMarket({ navigation }) {
                 </View>
               </Row>
             )}
-          />
+          /> */}
         </View>
 
         <View

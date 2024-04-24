@@ -12,6 +12,12 @@ import { Button, ScrollView, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useIsFocused } from "@react-navigation/native";
+import {
+  AntDesign,
+  Ionicons,
+  SimpleLineIcons,
+  Zocial,
+} from "@expo/vector-icons";
 
 export default function LogIn({ navigation }) {
   const [input, setInput] = useState({ username: "", password: "" });
@@ -20,9 +26,12 @@ export default function LogIn({ navigation }) {
 
   const getData = async () => {
     const res = await AsyncStorage.getItem("data");
-    return JSON.parse(res);
-  };
 
+    if (res !== null) {
+      return JSON.parse(res);
+    }
+    return {};
+  };
   useEffect(() => {
     getData().then((res) => setData(res));
   }, [isFocused]);
@@ -56,12 +65,12 @@ export default function LogIn({ navigation }) {
   };
 
   return (
-    <SafeAreaView style={{ height: "100%" }}>
+    <SafeAreaView>
       <ScrollView automaticallyAdjustKeyboardInsets={true}>
         <Container>
           <ImageContainer>
             <Logo source={require("./logo.png")} />
-            <Image source={require("./trees.jpg")} />
+            <Image source={require("../informative/3.jpeg")} />
           </ImageContainer>
           <InputsContainer>
             <Input
@@ -75,12 +84,63 @@ export default function LogIn({ navigation }) {
             />
 
             <View style={{ width: "80%", borderRadius: 20 }}>
-              <Button title="Log in" onPress={handleLogin} color="#5b9a72" />
+              {/* <Button title="Log in" onPress={handleLogin} color="#5b9a72" /> */}
             </View>
             <TouchableOpacity onPress={() => navigation.navigate("Signup")}>
               <Text>create account</Text>
             </TouchableOpacity>
           </InputsContainer>
+          <View
+            style={{
+              borderTopLeftRadius: 50,
+              borderTopRightRadius: 50,
+              width: "100%",
+              height: "8%",
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "space-around",
+              backgroundColor: "#5b9a72",
+            }}
+          >
+            <TouchableOpacity
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
+            >
+              <AntDesign name="home" size={24} color="black" />
+              {/* <Text style={{ color: "#c6dbca" }}>Home</Text> */}
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "space-between",
+              }}
+              onPress={() => navigation.navigate("Informative")}
+            >
+              <Ionicons
+                name="information-circle-outline"
+                size={24}
+                color="black"
+              />
+              {/* <Text style={{ color: "#c6dbca" }}>Informative</Text> */}
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
+              onPress={() => navigation.navigate("Guest")}
+            >
+              <AntDesign name="user" size={24} color="black" />
+              {/* <Text style={{ color: "#c6dbca" }}>Logout</Text> */}
+            </TouchableOpacity>
+          </View>
         </Container>
       </ScrollView>
     </SafeAreaView>

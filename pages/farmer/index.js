@@ -18,13 +18,16 @@ export default function Farmer({ navigation }) {
 
   const getData = async () => {
     const res = await AsyncStorage.getItem("data");
-    return JSON.parse(res);
+
+    if (res !== null) {
+      return JSON.parse(res);
+    }
+    return {};
   };
 
   useLayoutEffect(() => {
     getData().then((res) => {
       const farmer = res.farmers.find(({ id }) => id === res.activeId);
-      console.log(farmer.pendingVetApproval, farmer.pendingGovApproval);
       if (farmer.pendingVetApproval && farmer.pendingGovApproval) {
         const vet = res.vets.find(({ id }) => id === farmer.approvedByVetId);
         const string = `Approved by Vet : ${vet.username} and Government`;
@@ -116,7 +119,7 @@ export default function Farmer({ navigation }) {
                 Choose {"\n"} Market
               </Text>
               <Image
-                source={require("./tor.jpg")}
+                source={require("./newMarket.jpeg")}
                 style={{
                   width: "100%",
                   height: "100%",

@@ -15,9 +15,12 @@ export default function GovAdministrator({ navigation }) {
 
   const getData = async () => {
     const res = await AsyncStorage.getItem("data");
-    return JSON.parse(res);
-  };
 
+    if (res !== null) {
+      return JSON.parse(res);
+    }
+    return {};
+  };
   useEffect(() => {
     getData().then((res) => {
       setData(res);
@@ -64,7 +67,88 @@ export default function GovAdministrator({ navigation }) {
           />
         </View>
         <View style={{ height: "65%" }}>
-          <FlatList
+          {data?.farmers?.map((item) => {
+            const isApproved =
+              approvedFarmers?.some(({ id }) => id === item.id) || false;
+            return (
+              <Row style={{ borderRadius: 4 }}>
+                <View
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                  }}
+                >
+                  <View
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "center",
+                      marginLeft: 15,
+                      gap: 5,
+                    }}
+                  >
+                    <Text
+                      style={{
+                        fontSize: 15,
+                        color: "white",
+                        textTransform: "capitalize",
+                      }}
+                    >
+                      {item.username}
+                    </Text>
+                    <Text
+                      style={{
+                        fontSize: 11,
+                        color: "white",
+                      }}
+                    >
+                      19/20/2000
+                    </Text>
+                  </View>
+                </View>
+                {!isApproved ? (
+                  <Pressable
+                    style={{
+                      backgroundColor: "white",
+                      width: "40%",
+                      height: "50%",
+                      border: "2px solid gray",
+                      borderRadius: 14,
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                    onPress={() => handleApproveFarmer(item)}
+                  >
+                    <Text style={{ fontSize: 11, color: "#5b9a72" }}>
+                      APPROVE
+                    </Text>
+                  </Pressable>
+                ) : (
+                  <View
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      width: "40%",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <AntDesign name="checkcircle" size={30} color="white" />
+                    <Text
+                      style={{
+                        color: "white",
+                        fontSize: 15,
+                      }}
+                    >
+                      Approved
+                    </Text>
+                  </View>
+                )}
+              </Row>
+            );
+          })}
+          {/* <FlatList
             data={data.farmers}
             renderItem={({ index, item }) => {
               const isApproved = approvedFarmers.some(
@@ -149,7 +233,7 @@ export default function GovAdministrator({ navigation }) {
                 </Row>
               );
             }}
-          />
+          /> */}
         </View>
 
         <View

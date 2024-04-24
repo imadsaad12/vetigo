@@ -16,7 +16,11 @@ export default function ChooseVet({ navigation }) {
 
   const getData = async () => {
     const res = await AsyncStorage.getItem("data");
-    return JSON.parse(res);
+
+    if (res !== null) {
+      return JSON.parse(res);
+    }
+    return {};
   };
 
   useLayoutEffect(() => {
@@ -36,6 +40,15 @@ export default function ChooseVet({ navigation }) {
     { key: "Bint Jbeil", value: "Bint Jbeil" },
     { key: "Baalback", value: "Baalback" },
     { key: "Nabatieh", value: "Nabatieh" },
+    { key: "Beirut", value: "Beirut" },
+    { key: "Tripoli", value: "Tripoli" },
+    { key: "Tyre", value: "Tyre" },
+    { key: "Sidon", value: "Sidon" },
+    { key: "Jounieh", value: "Jounieh" },
+    { key: "Zahle", value: "Zahle" },
+    { key: "Byblos", value: "Byblos" },
+    { key: "Aley", value: "Aley" },
+    { key: "Batroun", value: "Batroun" },
   ];
 
   const handleAddVet = async (item) => {
@@ -78,7 +91,82 @@ export default function ChooseVet({ navigation }) {
             />
           </View>
           <View style={{ height: "100%" }}>
-            <FlatList
+            {filteredData.map((item) => {
+              return (
+                <Row style={{ borderRadius: 4 }}>
+                  <View
+                    style={{
+                      width: "40%",
+                      display: "flex",
+                      flexDirection: "row",
+                    }}
+                  >
+                    <View
+                      style={{
+                        borderRadius: 100,
+                        width: 50,
+                        height: 50,
+                        backgroundColor: "white",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Text
+                        style={{
+                          fontWeight: "bold",
+                          fontSize: 20,
+                          color: "gray",
+                          textTransform: "uppercase",
+                        }}
+                      >
+                        {item.username[0]}
+                      </Text>
+                    </View>
+                    <View
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "center",
+                        marginLeft: 15,
+                        gap: 5,
+                        width: "100%",
+                      }}
+                    >
+                      <Text
+                        style={{
+                          fontSize: 15,
+                          color: "white",
+                        }}
+                      >
+                        {item.username}
+                      </Text>
+                      <Text
+                        style={{
+                          fontSize: 11,
+                          color: "white",
+                        }}
+                      >
+                        {item.date}
+                      </Text>
+                    </View>
+                  </View>
+                  {selectedVetId === item.id ? (
+                    <Text style={{ color: "white", fontSize: 14 }}>
+                      Selected
+                    </Text>
+                  ) : (
+                    <AntDesign
+                      name="pluscircle"
+                      size={30}
+                      color="white"
+                      onPress={() => handleAddVet(item)}
+                    />
+                  )}
+                </Row>
+              );
+            })}
+            {/* <FlatList
               data={filteredData}
               renderItem={({ item }) => {
                 return (
@@ -155,7 +243,7 @@ export default function ChooseVet({ navigation }) {
                   </Row>
                 );
               }}
-            />
+            /> */}
           </View>
         </ScrollView>
         <Menu navigation={navigation} />

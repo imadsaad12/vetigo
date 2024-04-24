@@ -4,7 +4,7 @@ export const Container = styled.View`
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 100%;
+  height: 101%;
   justify-content: space-between;
 `;
 
@@ -15,16 +15,19 @@ export const Header = styled.View`
   justify-content: center;
   align-items: center;
   background-color: #5b9a72;
+  margin-bottom: 10;
 `;
 
-export const Row = styled.TouchableOpacity`
+export const Row = styled.View`
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  flex-direction: row;
+  justify-content: space-between;
   padding-left: 10;
   padding-right: 10;
   align-items: center;
-  width: 100%;
+  height: 150;
+  width: 80%;
+  align-self: center;
+  background-color: #5b9a72;
   margin-bottom: 20;
-  gap: 10;
 `;

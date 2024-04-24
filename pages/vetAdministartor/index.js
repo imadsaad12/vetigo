@@ -16,7 +16,11 @@ export default function VetAdministrator({ navigation }) {
 
   const getData = async () => {
     const res = await AsyncStorage.getItem("data");
-    return JSON.parse(res);
+
+    if (res !== null) {
+      return JSON.parse(res);
+    }
+    return {};
   };
 
   useEffect(() => {
@@ -63,7 +67,88 @@ export default function VetAdministrator({ navigation }) {
         </Header>
 
         <View style={{ height: "65%" }}>
-          <FlatList
+          {waitingFarmers.map((item) => {
+            const isApproved = approvedFarmers.some(({ id }) => id === item.id);
+            return (
+              <Row style={{ borderRadius: 4 }}>
+                <TouchableOpacity
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                  }}
+                  onPress={() => navigation.navigate("Upload")}
+                >
+                  <View
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "center",
+                      marginLeft: 15,
+                      gap: 5,
+                    }}
+                  >
+                    <Text
+                      style={{
+                        fontSize: 13,
+                        color: "white",
+                        textTransform: "capitalize",
+                      }}
+                    >
+                      {item.username}
+                    </Text>
+                    <Text
+                      style={{
+                        fontSize: 11,
+                        color: "white",
+                      }}
+                    >
+                      {item.phoneNumber}
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+                {!isApproved ? (
+                  <Pressable
+                    style={{
+                      backgroundColor: "white",
+                      width: "40%",
+                      height: "50%",
+                      border: "2px solid gray",
+                      borderRadius: 14,
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                    onPress={() => handleApproveFarmer(item)}
+                  >
+                    <Text style={{ fontSize: 11, color: "#5b9a72" }}>
+                      APPROVE
+                    </Text>
+                  </Pressable>
+                ) : (
+                  <View
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      width: "40%",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <AntDesign name="checkcircle" size={30} color="white" />
+                    <Text
+                      style={{
+                        color: "white",
+                        fontSize: 15,
+                      }}
+                    >
+                      Approved
+                    </Text>
+                  </View>
+                )}
+              </Row>
+            );
+          })}
+          {/* <FlatList
             data={waitingFarmers || []}
             renderItem={({ index, item }) => {
               const isApproved = approvedFarmers.some(
@@ -71,12 +156,12 @@ export default function VetAdministrator({ navigation }) {
               );
               return (
                 <Row style={{ borderRadius: 4 }}>
-                  <View
+                  <TouchableOpacity
                     style={{
-                      width: "40%",
                       display: "flex",
                       flexDirection: "row",
                     }}
+                    onPress={() => navigation.navigate("Upload")}
                   >
                     <View
                       style={{
@@ -89,7 +174,7 @@ export default function VetAdministrator({ navigation }) {
                     >
                       <Text
                         style={{
-                          fontSize: 15,
+                          fontSize: 13,
                           color: "white",
                           textTransform: "capitalize",
                         }}
@@ -102,10 +187,10 @@ export default function VetAdministrator({ navigation }) {
                           color: "white",
                         }}
                       >
-                        19/20/2000
+                        {item.phoneNumber}
                       </Text>
                     </View>
-                  </View>
+                  </TouchableOpacity>
                   {!isApproved ? (
                     <Pressable
                       style={{
@@ -148,7 +233,7 @@ export default function VetAdministrator({ navigation }) {
                 </Row>
               );
             }}
-          />
+          /> */}
         </View>
 
         <View

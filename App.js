@@ -1,9 +1,13 @@
+import { SafeAreaProvider } from "react-native-safe-area-context";
 import Navigation from "./Navigation";
+import { registerRootComponent } from "expo";
 
-export default function App() {
+function App() {
   return (
-    <>
+    <SafeAreaProvider>
       <Navigation />
-    </>
+    </SafeAreaProvider>
   );
 }
+
+registerRootComponent(App);

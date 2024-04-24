@@ -4,16 +4,13 @@ import {
   Image,
   TouchableOpacity,
   Text as Title,
-  KeyboardAvoidingView,
   Button,
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Container, Text } from "./styles";
-import { CustomizedButton, Input } from "../login/styles";
-import RNPickerSelect from "react-native-picker-select";
+import { Input } from "../login/styles";
 import { ScrollView } from "react-native-gesture-handler";
-import Picker from "react-native-picker-select";
 import { SelectList } from "react-native-dropdown-select-list";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -24,13 +21,19 @@ export default function Signup({ navigation }) {
     { name: "numberOfHerd", placeholder: "Number of herd" },
     { name: "landArea", placeholder: "Land area" },
     { name: "typeOfHerd", placeholder: "Type of herd" },
+    { name: "phoneNumber", placeholder: "Phone number" },
+    { name: "product", placeholder: "product" },
   ];
 
   const [data, setData] = useState([]);
 
   const getData = async () => {
     const res = await AsyncStorage.getItem("data");
-    return JSON.parse(res);
+
+    if (res !== null) {
+      return JSON.parse(res);
+    }
+    return {};
   };
 
   useEffect(() => {

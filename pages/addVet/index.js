@@ -28,9 +28,12 @@ export default function AddVet({ navigation }) {
 
   const getData = async () => {
     const res = await AsyncStorage.getItem("data");
-    return JSON.parse(res);
-  };
 
+    if (res !== null) {
+      return JSON.parse(res);
+    }
+    return {};
+  };
   useEffect(() => {
     getData().then((res) => setData(res));
   }, []);
@@ -38,11 +41,18 @@ export default function AddVet({ navigation }) {
   const [selected, setSelected] = useState("");
 
   const locationData = [
-    { key: "1", value: "A1" },
-    { key: "2", value: "B2" },
-    { key: "3", value: "C3" },
-    { key: "4", value: "D5" },
-    { key: "5", value: "E6" },
+    { key: "Bint Jbeil", value: "Bint Jbeil" },
+    { key: "Baalback", value: "Baalback" },
+    { key: "Nabatieh", value: "Nabatieh" },
+    { key: "Beirut", value: "Beirut" },
+    { key: "Tripoli", value: "Tripoli" },
+    { key: "Tyre", value: "Tyre" },
+    { key: "Sidon", value: "Sidon" },
+    { key: "Jounieh", value: "Jounieh" },
+    { key: "Zahle", value: "Zahle" },
+    { key: "Byblos", value: "Byblos" },
+    { key: "Aley", value: "Aley" },
+    { key: "Batroun", value: "Batroun" },
   ];
 
   const fields = [
